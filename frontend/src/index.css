@@ -1,0 +1,567 @@
+/* ===================================================================
+   BLACKWALL — Cyberpunk 2077 UI
+   Palette reference: CP2077 in-game menus and HUD
+     Primary: hot red-magenta (#ed1c51 / #ff003c)
+     Secondary: ice blue (#00f0ff / #0af)
+     Tertiary: warm amber (#f5a623) for warnings
+     Backgrounds: near-black with blue undertone
+     Text: cool gray-white
+   Fonts: Rajdhani (headings/brand) + Share Tech Mono (body/code)
+   =================================================================== */
+
+/* Fonts are self-hosted via @fontsource (imported in main.tsx) — no CDN */
+
+:root {
+  /* Backgrounds — dark with subtle blue cast like CP2077 menus */
+  --bg:            #080811;
+  --bg-elevated:   #0e0e1a;
+  --bg-surface:    #141424;
+  --border:        #1c1c35;
+  --border-glow:   #ed1c5133;
+
+  /* Text */
+  --text:          #ccd1da;
+  --text-muted:    #555577;
+  --text-bright:   #f0f0f5;
+
+  /* Core palette — Cyberpunk 2077 */
+  --cp-red:        #ed1c51;
+  --cp-magenta:    #ff003c;
+  --cp-hotpink:    #ff2a6d;
+  --cp-blue:       #00f0ff;
+  --cp-ice:        #0af;
+  --cp-darkblue:   #0a1628;
+  --cp-amber:      #f5a623;
+  --cp-green:      #00ff6a;
+
+  /* Semantic mapping */
+  --accent:        var(--cp-red);
+  --accent-alt:    var(--cp-blue);
+  --danger:        var(--cp-magenta);
+  --warning:       var(--cp-amber);
+  --success:       var(--cp-green);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Share Tech Mono", "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Rajdhani", "Segoe UI", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+a {
+  color: var(--cp-blue);
+  text-decoration: none;
+  transition: color 0.15s, text-shadow 0.15s;
+}
+a:hover {
+  color: var(--cp-red);
+  text-shadow: 0 0 8px rgba(237, 28, 81, 0.5);
+}
+
+/* ------- Buttons ------- */
+button {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: var(--bg-surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.45rem 1rem;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+button:hover {
+  border-color: var(--cp-red);
+  color: var(--cp-red);
+  box-shadow: 0 0 10px rgba(237, 28, 81, 0.2), inset 0 0 10px rgba(237, 28, 81, 0.04);
+}
+button.primary {
+  background: var(--cp-red);
+  color: #ffffff;
+  border-color: var(--cp-red);
+  box-shadow: 0 0 12px rgba(237, 28, 81, 0.3);
+}
+button.primary:hover {
+  background: #ff2e5e;
+  box-shadow: 0 0 22px rgba(237, 28, 81, 0.55);
+}
+button.danger {
+  background: transparent;
+  color: var(--cp-magenta);
+  border-color: var(--cp-magenta);
+}
+button.danger:hover {
+  background: rgba(255, 0, 60, 0.08);
+  box-shadow: 0 0 12px rgba(255, 0, 60, 0.3);
+}
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ------- Inputs ------- */
+input, select, textarea {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.45rem 0.65rem;
+  border-radius: 2px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--cp-red);
+  box-shadow: 0 0 8px rgba(237, 28, 81, 0.3);
+}
+
+/* ------- Layout ------- */
+#root { min-height: 100vh; }
+.app { display: flex; min-height: 100vh; }
+
+/* ------- Sidebar Nav ------- */
+.nav {
+  width: 220px;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  padding: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+.nav-brand {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cp-red);
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-shadow: 0 0 14px rgba(237, 28, 81, 0.5), 0 0 40px rgba(237, 28, 81, 0.15);
+}
+.nav-section {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 1.1rem 1.25rem 0.25rem;
+}
+.nav-link {
+  display: block;
+  padding: 0.5rem 1.25rem;
+  color: var(--text-muted);
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.12s;
+  border-left: 2px solid transparent;
+}
+.nav-link:hover {
+  color: var(--cp-blue);
+  background: rgba(0, 240, 255, 0.03);
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  text-decoration: none;
+}
+.nav-link.active {
+  color: var(--cp-red);
+  border-left-color: var(--cp-red);
+  background: rgba(237, 28, 81, 0.05);
+  text-shadow: 0 0 8px rgba(237, 28, 81, 0.35);
+}
+
+/* ------- Main content ------- */
+.main {
+  flex: 1;
+  padding: 2rem;
+  overflow: auto;
+  background: var(--bg);
+}
+
+/* ------- Page ------- */
+.page h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  color: var(--cp-red);
+  text-shadow: 0 0 12px rgba(237, 28, 81, 0.25);
+}
+.page h2 {
+  font-size: 0.85rem;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--cp-blue);
+  text-shadow: 0 0 4px rgba(0, 240, 255, 0.15);
+}
+
+/* ------- Welcome banner ------- */
+.welcome-banner {
+  background: linear-gradient(135deg, rgba(237, 28, 81, 0.08) 0%, rgba(0, 240, 255, 0.04) 100%);
+  border: 1px solid var(--cp-red);
+  border-radius: 3px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.welcome-banner::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cp-red), var(--cp-hotpink), var(--cp-blue));
+}
+.welcome-banner::after {
+  content: "";
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(237, 28, 81, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.welcome-title {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cp-red);
+  margin: 0 0 0.4rem;
+  text-shadow: 0 0 10px rgba(237, 28, 81, 0.3);
+}
+.welcome-text {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.6;
+}
+.welcome-text em {
+  color: var(--cp-blue);
+  font-style: normal;
+  text-shadow: 0 0 4px rgba(0, 240, 255, 0.2);
+}
+.welcome-dismiss {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+.welcome-dismiss:hover {
+  color: var(--cp-red);
+  box-shadow: none;
+  border-color: transparent;
+}
+
+/* ------- Cards ------- */
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.1rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--cp-red);
+  opacity: 0.35;
+  border-radius: 3px 0 0 3px;
+}
+.card button { margin-right: 0.5rem; margin-top: 0.5rem; }
+.card input, .card select { margin-right: 0.5rem; }
+
+/* ------- Rows / forms ------- */
+.row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+.row input { flex: 1; }
+
+/* ------- Status badges ------- */
+.warning { color: var(--warning); }
+.error { color: var(--cp-magenta); text-shadow: 0 0 6px rgba(255, 0, 60, 0.35); }
+.loading, .page-error { padding: 1rem; }
+
+/* ------- Tables ------- */
+.table { width: 100%; border-collapse: collapse; }
+.table th {
+  text-align: left;
+  padding: 0.5rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cp-blue);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+}
+.table td {
+  text-align: left;
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.table tr:hover td { background: rgba(237, 28, 81, 0.03); }
+
+.status-succeeded { color: var(--success); text-shadow: 0 0 5px rgba(0, 255, 106, 0.3); }
+.status-failed, .status-canceled { color: var(--cp-magenta); text-shadow: 0 0 4px rgba(255, 0, 60, 0.3); }
+.status-running { color: var(--cp-blue); text-shadow: 0 0 4px rgba(0, 240, 255, 0.3); }
+.status-pending { color: var(--text-muted); }
+
+/* ------- Lists ------- */
+.project-list, .job-list, .findings-list { list-style: none; padding-left: 0; }
+.project-list li, .job-list li, .findings-list li { padding: 0.3rem 0; border-bottom: 1px solid var(--border); }
+
+.pathway-hypothesis {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.15rem;
+  color: var(--cp-red);
+  text-shadow: 0 0 10px rgba(237, 28, 81, 0.3);
+}
+.risk { color: var(--cp-hotpink); text-shadow: 0 0 4px rgba(255, 42, 109, 0.25); }
+.text-muted { color: var(--text-muted); }
+
+/* ===================================================================
+   Tools page
+   =================================================================== */
+.tools-section-title {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cp-red);
+  margin: 1.5rem 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(237, 28, 81, 0.2);
+}
+.tools-section-title:first-of-type { margin-top: 0.5rem; }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-radius: 2px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--cp-red);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.tool-card:hover::after { transform: scaleX(1); }
+.tool-card:hover {
+  border-color: var(--cp-red);
+  box-shadow: 0 0 14px rgba(237, 28, 81, 0.12);
+  color: var(--text);
+}
+.tool-card-active {
+  border-color: var(--cp-blue) !important;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.15);
+}
+.tool-card-active::after {
+  background: var(--cp-blue);
+  transform: scaleX(1);
+}
+.tool-card-name {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+.tool-card-active .tool-card-name { color: var(--cp-blue); text-shadow: 0 0 6px rgba(0, 240, 255, 0.3); }
+.tool-card-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.tool-card-tag {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--cp-red);
+  padding: 0.1rem 0.4rem;
+  border-radius: 1px;
+  margin-top: 0.4rem;
+}
+
+.tool-panel { margin-top: 0.75rem; }
+.tool-panel::before { background: var(--cp-blue); opacity: 0.5; }
+.tool-form { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
+.tool-field { display: flex; flex-direction: column; gap: 0.25rem; }
+.tool-field label {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.tool-field input, .tool-field select { min-width: 200px; }
+.tool-result { margin-top: 1rem; }
+
+/* Raw output */
+.raw-details { margin-top: 0.75rem; }
+.raw-details summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.raw-details summary:hover { color: var(--cp-blue); }
+.raw-output {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.78rem;
+  max-height: 400px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--cp-blue);
+}
+
+/* ===================================================================
+   Dashboard quick-tool widgets
+   =================================================================== */
+.dash-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.dash-tool-widget {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1rem;
+  position: relative;
+}
+.dash-tool-widget::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cp-red), var(--cp-hotpink), transparent);
+}
+.dash-tool-widget h3 {
+  font-size: 0.8rem;
+  margin: 0 0 0.6rem;
+  color: var(--cp-blue);
+  text-shadow: 0 0 4px rgba(0, 240, 255, 0.2);
+}
+.dash-tool-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.dash-tool-row input { flex: 1; }
+
+/* ===================================================================
+   Stats row on dashboard
+   =================================================================== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.stat-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.9rem 1rem;
+  text-align: center;
+}
+.stat-value {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--cp-red);
+  text-shadow: 0 0 12px rgba(237, 28, 81, 0.25);
+  line-height: 1;
+}
+.stat-label {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* ===================================================================
+   Scrollbar styling
+   =================================================================== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--cp-red); }
+
+/* ===================================================================
+   Selection
+   =================================================================== */
+::selection {
+  background: var(--cp-red);
+  color: #ffffff;
+}

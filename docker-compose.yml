@@ -1,0 +1,67 @@
+# Recon Web App - Postgres + toolchain containers
+# Default: postgres only. Tool images built on demand.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: recon-postgres
+    environment:
+      POSTGRES_USER: ${RECON_DB_USER:-recon}
+      POSTGRES_PASSWORD: ${RECON_DB_PASSWORD:?Set RECON_DB_PASSWORD in .env}
+      POSTGRES_DB: ${RECON_DB_NAME:-recon}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - recon_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recon"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  # Nmap and active scanning (pinned version)
+  nmap:
+    build:
+      context: ./tools/nmap
+      dockerfile: Dockerfile
+    image: recon-nmap:local
+    read_only: true
+    network_mode: host
+    # Override at runtime for resource limits; default 2 CPU, 2G mem
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+    profiles:
+      - tools
+
+  # Web enumeration (gobuster-style)
+  gobuster:
+    build:
+      context: ./tools/gobuster
+      dockerfile: Dockerfile
+    image: recon-gobuster:local
+    read_only: true
+    network_mode: host
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+    profiles:
+      - tools
+
+  # DNS / dig
+  dnsutils:
+    build:
+      context: ./tools/dnsutils
+      dockerfile: Dockerfile
+    image: recon-dnsutils:local
+    read_only: true
+    network_mode: host
+    profiles:
+      - tools
+
+volumes:
+  recon_pgdata:
